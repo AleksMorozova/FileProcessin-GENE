@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FileSystemSearch.FileWrapper
 {
-    abstract class WorkWithFile
+    public abstract class WorkWithFile
     {
         public string[] GetDirectiry(string path)
         {

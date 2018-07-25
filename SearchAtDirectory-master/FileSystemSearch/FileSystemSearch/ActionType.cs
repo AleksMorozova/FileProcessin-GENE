@@ -9,6 +9,7 @@ namespace FileSystemSearch
     public enum ActionType
     {
         all,
-        spec
+        spec,
+        selector
     }
 }

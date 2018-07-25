@@ -2,10 +2,7 @@
 using FileSystemSearch.ConcreteProcessors;
 using FileSystemSearch.FileWrapper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FileSystemSearch
 {
@@ -32,6 +29,9 @@ namespace FileSystemSearch
                     break;
                 case ActionType.spec:
                     builder.RegisterType<ProcessSPEC>().As<IProcess>();
+                    break;//selector
+                case ActionType.selector:
+                    builder.RegisterType<ProcessSelector>().As<IProcess>();
                     break;
                 default:
                     Console.WriteLine("Error type!");

@@ -32,24 +32,15 @@ namespace FileSystemSearch
 
         }
 
-        public Task<IEnumerable<string>> GetFiles(string path)
+        public void ProcessDirectory(string path)
         {
-            return Task.Run<IEnumerable<string>>(() => _fileWrapper.GetFiles(path));
-        }
+            string[] fileEntries = Directory.GetFiles(path);
+            foreach (string fileName in fileEntries)
+                _processor.ProcessFile(fileName, _fileWrapper);
 
-        public Task<IEnumerable<string>> GetDirectories(string path)
-        {
-            return Task.Run<IEnumerable<string>>(() => _fileWrapper.GetDirectiry(path));
-        }
-
-        public async void ProcessDirectory(string path)
-        {
-            var files = await GetFiles(path);
-
-            Parallel.ForEach(files, (file) =>
-                _processor.ProcessFile(file.Replace(path + @"\", String.Empty), _fileWrapper));
-
-            await GetDirectories(path).ContinueWith(async dirs => Parallel.ForEach(await dirs, (d) => Process(d)));
+            string[] subdirectoryEntries = Directory.GetDirectories(path);
+            foreach (string subdirectory in subdirectoryEntries)
+                ProcessDirectory(subdirectory);
         }
     }
 }

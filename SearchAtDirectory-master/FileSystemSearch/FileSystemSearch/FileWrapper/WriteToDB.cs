@@ -6,6 +6,8 @@ using System.Security.Principal;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileSystemSearch.DAL;
+using FileSystemSearch.Model;
 
 namespace FileSystemSearch.FileWrapper
 {
@@ -24,6 +26,15 @@ namespace FileSystemSearch.FileWrapper
                 var modification = File.GetLastWriteTime(path);
                 String s = creation + "/ " + modification + "/" + path;
                 sw.WriteLine(s);
+
+
+
+                using (var ctx = new StatisticContext())
+                {
+                    var selector = new Selector() { SelectorName = s, AddedDate = DateTime.Now };
+                    ctx.Selectors.Add(selector);
+                    ctx.SaveChanges();
+                }
             }
         }
     }

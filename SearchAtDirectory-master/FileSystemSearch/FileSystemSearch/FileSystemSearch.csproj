@@ -42,11 +42,20 @@
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.6.4.1\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,20 +73,28 @@
     <Compile Include="ConcreteProcessors\ProcessSelector.cs" />
     <Compile Include="ConcreteProcessors\ProcessAll.cs" />
     <Compile Include="ConcreteProcessors\ProcessSPEC.cs" />
+    <Compile Include="DAL\StatisticContext.cs" />
     <Compile Include="DirectoryProcessor.cs" />
     <Compile Include="FileWrapper\FileWrapper.cs" />
     <Compile Include="FileWrapper\IFileWrapper.cs" />
     <Compile Include="FileWrapper\WorkWithFile.cs" />
     <Compile Include="FileWrapper\WriteToDB.cs" />
     <Compile Include="IProcess.cs" />
+    <Compile Include="Model\ClientTest.cs" />
+    <Compile Include="Model\SagaAction.cs" />
+    <Compile Include="Model\Selector.cs" />
     <Compile Include="ProcessSelectors.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\PathConstants.cs" />
+    <Compile Include="Tools\SelectorType.cs" />
+    <Compile Include="Tools\TestType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

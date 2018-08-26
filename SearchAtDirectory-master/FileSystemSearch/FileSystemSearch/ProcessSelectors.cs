@@ -45,7 +45,6 @@ namespace FileSystemSearch
                 {
                     sw.WriteLine(selector);
                 }
-
             }
         }
     }

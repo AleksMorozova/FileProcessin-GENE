@@ -15,26 +15,11 @@ namespace FileSystemSearch.FileWrapper
     {
         public void WriteToFile(string path, string resultFile)
         {
-            using (StreamWriter sw = File.AppendText(resultFile))
+            using (var ctx = new StatisticContext())
             {
-                var fullPath = Path.GetFullPath(path);
-                FileSecurity fileSecurity = File.GetAccessControl(@"D:\Main\A\3.spec.txt");
-                IdentityReference sid = fileSecurity.GetOwner(typeof(SecurityIdentifier));
-                NTAccount ntAccount = sid.Translate(typeof(NTAccount)) as NTAccount;
-                string owner = ntAccount.Value;
-                var creation = File.GetCreationTime(path);
-                var modification = File.GetLastWriteTime(path);
-                String s = creation + "/ " + modification + "/" + path;
-                sw.WriteLine(s);
-
-
-
-                using (var ctx = new StatisticContext())
-                {
-                    var selector = new Selector() { SelectorName = s, AddedDate = DateTime.Now };
-                    ctx.Selectors.Add(selector);
-                    ctx.SaveChanges();
-                }
+                var selector = new Selector() { SelectorName = path, AddedDate = DateTime.Now };
+                ctx.Selectors.Add(selector);
+                ctx.SaveChanges();
             }
         }
     }

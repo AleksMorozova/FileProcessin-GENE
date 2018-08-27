@@ -8,9 +8,6 @@ namespace FileSystemSearch.FileWrapper
 {
     public interface IFileWrapper
     {
-        string[] GetDirectiry(string path);
-        string[] GetFiles(string path);
-        bool Exists(string path);
-        void WriteToFile(string path, string resultFile);
+        void WriteData(string path, string resultFile);
     }
 }

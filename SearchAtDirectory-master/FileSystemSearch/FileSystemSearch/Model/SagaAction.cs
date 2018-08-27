@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileSystemSearch.Tools;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -14,5 +15,6 @@ namespace FileSystemSearch.Model
         public String Path { get; set; }
         public String Author { get; set; }
         public String Task { get; set; }
+        public EntityType Type { get; set; }
     }
 }

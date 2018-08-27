@@ -1,31 +1,43 @@
 ﻿
 using System;
-using FileSystemSearch.FileWrapper;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using FileSystemSearch.DAL;
 using FileSystemSearch.Model;
+using FileSystemSearch.Tools;
+using FileSystemSearch.ConcreteProcessors;
+using FileSystemSearch.DBWriter;
+using FileSystemSearch.FileWrapper;
 
 namespace FileSystemSearch
 {
     class Program
     {
-        public static List<Selector> ExistingSelectors { get; set; } // = new List<Selector>();
+        public static List<string> ExistingSelectors { get; set; }
+        public static List<string> ExistingTests { get; set; }
 
-        public static string ResultFilePath { get; set; }
-        public static string StartFolder { get; set; }
+        public static string TestResultFilePath { get; set; }
+        public static string SelectorResultFilePath { get; set; }
+
+        public static string MainPath { get; set; }
         static void Main(string[] args)
         {
-            ResultFilePath = @"D:\result.txt";
-            File.WriteAllText(ResultFilePath, String.Empty);
-            ExistingSelectors = new List<Selector>();
+            TestResultFilePath = @"D:\testResult.txt";
+            SelectorResultFilePath = @"D:\selectorResult.txt";
+
+            MainPath = @"J:\client\web-oe\web-client\modules\";
+
+            File.WriteAllText(TestResultFilePath, String.Empty);
+            File.WriteAllText(SelectorResultFilePath, String.Empty);
+
+            ExistingSelectors = new List<string>();
             initSelectors();
 
-            StartFolder = @"D:\Main";
-            var spec_processor = new DirectoryProcessor(new ConcreteProcessors.ProcessSPEC(), new FileWrapper.FileWrapper());
-            spec_processor.Process(StartFolder);
-            Console.WriteLine("End of processing spec files");
+            ProcessRequisitionTest(MainPath + PathConstants.requisitionTestPath);
+            ProcessPatientTest(MainPath + PathConstants.patientTestPath);
+            ProcessPatientSelectors(MainPath + PathConstants.patientModulePath);
+            ProcessRequisitionSelectors(MainPath + PathConstants.requisitionModulePath);
 
             Console.ReadKey();
         }
@@ -33,7 +45,7 @@ namespace FileSystemSearch
         {
             using (var ctx = new StatisticContext())
             {
-                ExistingSelectors = ctx.Selectors.ToList();
+                ExistingSelectors = ctx.Selectors.Select(_=>_.SelectorName).ToList();
             }
         }
         public static void WriteFirstSelector()
@@ -56,17 +68,34 @@ namespace FileSystemSearch
                 }
             }
         }
+
+        public static void ProcessRequisitionTest(string path)
+        {
+            var spec_processor = new DirectoryProcessor(new ProcessSPEC(), new FileWriter(), new WriteSPEC(), EntityType.requisitionIntegrationTest);
+            spec_processor.Process(path);
+            Console.WriteLine("End of processing requisition tests");
+        }
+
+        public static void ProcessPatientTest(string path)
+        {
+            var spec_processor = new DirectoryProcessor(new ProcessSPEC(), new FileWriter(), new WriteSPEC(), EntityType.patientIntegrationTest);
+            spec_processor.Process(path);
+            Console.WriteLine("End of processing patient tests");
+        }
+
+        public static void ProcessPatientSelectors(string path)
+        {
+            var spec_processor = new DirectoryProcessor(new ProcessSelector(), new FileWriter(), new WriteSelector(), EntityType.patientSelector);
+            spec_processor.Process(path);
+            Console.WriteLine("End of processing patient selectors");
+        }
+
+        public static void ProcessRequisitionSelectors(string path)
+        {
+            var spec_processor = new DirectoryProcessor(new ProcessSelector(), new FileWriter(), new WriteSelector(), EntityType.requisitionSelector);
+            spec_processor.Process(path);
+            Console.WriteLine("End of processing requisition selectors");
+        }
     }
 }
 
-/*Registration.Registrate<FileWrapper.WriteToDB>(ActionType.spec);
-     var spec_processor = new DirectoryProcessor(Registration.processor, Registration.fileWrapper);
-     spec_processor.Process(StartFolder);
-     Console.WriteLine("End of processing spec files");
-
-     ResultFilePath = @"D:\result.txt";
-     StartFolder = @"D:\Main";
-     Registration.Registrate<FileWrapper.WriteToDB>(ActionType.selector);
-     var selector_processor = new DirectoryProcessor(Registration.processor, Registration.fileWrapper);
-     selector_processor.Process(StartFolder);
-     Console.WriteLine("End of processing selectors files");*/

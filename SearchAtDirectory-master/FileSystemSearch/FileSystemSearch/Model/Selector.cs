@@ -10,7 +10,7 @@ namespace FileSystemSearch.Model
         [Key]
         public int ID { get; set; }
         public String SelectorName { get; set; }
-        public SelectorType Type { get; set; }
+        public EntityType Type { get; set; }
         public DateTime AddedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public String Path { get; set; }

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSystemSearch.Tools
+namespace FileSystemSearch
 {
-    public enum TestType
+    public interface IWriter
     {
-        sagaTest,
-        selectorTest,
-        unitTest
+        void WriteInformation(string data);
     }
 }

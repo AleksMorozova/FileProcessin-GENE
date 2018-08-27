@@ -4,7 +4,7 @@ using System.IO;
 
 namespace FileSystemSearch.FileWrapper
 {
-    public abstract class WorkWithFile
+    public class WorkWithFile
     {
         public string[] GetDirectiry(string path)
         {

@@ -10,7 +10,9 @@ namespace FileSystemSearch.DAL
 
         }
 
-        public DbSet<SagaAction> Sagas { get; set; }
+        public DbSet<SagaAction> Sagas { get; set; }//ClientTest
         public DbSet<Selector> Selectors { get; set; }
+        public DbSet<ClientTest> ClientTests { get; set; }
+
     }
 }

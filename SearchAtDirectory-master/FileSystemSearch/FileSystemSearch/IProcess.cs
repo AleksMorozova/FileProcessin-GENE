@@ -1,4 +1,6 @@
-﻿using FileSystemSearch.FileWrapper;
+﻿using FileSystemSearch.DBWriter;
+using FileSystemSearch.FileWrapper;
+using FileSystemSearch.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,6 @@ namespace FileSystemSearch
 {
     public interface IProcess
     {
-        void ProcessFile(string filePath, IFileWrapper _fileWrapper);
+        void ProcessFile(string filePath, IFileWrapper _fileWrapper, IDBWriter _dbWorker, EntityType type);
     }
 }

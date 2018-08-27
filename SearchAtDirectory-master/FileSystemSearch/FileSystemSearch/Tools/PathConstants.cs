@@ -9,11 +9,11 @@ namespace FileSystemSearch.Tools
     class PathConstants
     {
         public const string projectPath = "";
-        public const string patientModulePath = "";
-        public const string requisitionModulePath = "";
-        public const string patientSelectorTestPath = "";
-        public const string requisitionSelectorsTestPath = "";
-        public const string patientTestPath = "";
-        public const string requisitionTestPath = "";
+
+        public const string patientModulePath = @"modules\patient";
+        public const string requisitionModulePath = @"modules\requisition";
+
+        public const string patientTestPath = @"patient\entry\business-logic\unit-tests";
+        public const string requisitionTestPath = @"requisition\entry\business-logic\unit-tests";
     }
 }

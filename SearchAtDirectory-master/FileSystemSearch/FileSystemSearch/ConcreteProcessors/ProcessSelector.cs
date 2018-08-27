@@ -1,5 +1,7 @@
 ﻿
+using FileSystemSearch.DBWriter;
 using FileSystemSearch.FileWrapper;
+using FileSystemSearch.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,23 +39,21 @@ namespace FileSystemSearch.ConcreteProcessors
             }
             return result;
         }
-        private void writeResultToFile(List<string> selectors)
-        {
-            foreach (string selector in selectors)
-            {
-                using (StreamWriter sw = File.AppendText(Program.ResultFilePath))
-                {
-                    sw.WriteLine(selector);
-                }
 
-            }
-        }
-        public void ProcessFile(string path, IFileWrapper fileWrapper)
+        public void ProcessFile(string path, IFileWrapper fileWrapper, IDBWriter dbWriter, EntityType type)
         {
             if (Path.GetFileNameWithoutExtension(path).ToString().Contains("selectors"))
             {
                 List<string> result = getAllSelectors(path);
-                writeResultToFile(result);
+
+                foreach (string selector in result)
+                {
+                    if (!Program.ExistingSelectors.Contains(selector))
+                    {
+                        fileWrapper.WriteData(selector, Program.SelectorResultFilePath);
+                        dbWriter.WriteToDB(selector, type);
+                    }
+                }
             }
         }
     }

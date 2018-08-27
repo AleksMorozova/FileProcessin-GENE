@@ -1,4 +1,6 @@
-﻿using FileSystemSearch.FileWrapper;
+﻿using FileSystemSearch.DBWriter;
+using FileSystemSearch.FileWrapper;
+using FileSystemSearch.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +12,9 @@ namespace FileSystemSearch.ConcreteProcessors
 {
     public class ProcessAll : IProcess
     {
-        public void ProcessFile(string path, IFileWrapper fileWrapper)
+        public void ProcessFile(string path, IFileWrapper fileWrapper, IDBWriter dbWriter, EntityType type)
         {
-            fileWrapper.WriteToFile(path, Program.ResultFilePath);
+            fileWrapper.WriteData(path, Program.TestResultFilePath);
         }
     }
 }
